@@ -2,7 +2,9 @@
 
 I use Dockerised LiteLLM running alongside Caddy in a Proxmox LXC to manage most of the Cloud LLM and my local vLLM server LLM endpoints for a number of reasons including not having to share so many secrets with my 'claw agents for example, and so I can rename models so that I don't to rename them in several services if I change my local vLLM models.
 
-Caddy is for some ssl termination / port-num => hostname etc.  I use internal PKI and vlans and all that.
+Caddy is for some ssl termination / port-num => hostname etc. and layer 7 filtering e.g. to my vLLM specific endpoints.  I use internal PKI and vlans and all that.
+This LXC also hosts an API broker I use for some of the self-hosted services I use with my 'claws.
+It's just the "interceptor" I'm pushing to this repo at the moment.
 
 LiteLLM does support customised Python stages but I find it easier to have Claude Code make it's own interceptor for two main current uses:
 
