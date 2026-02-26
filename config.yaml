@@ -1,0 +1,42 @@
+# llm-interceptor per-model rules
+# ---------------------------------
+# Changes take effect immediately: run ./reload.sh (or: docker kill -s HUP llm-interceptor)
+
+defaults:
+  # Set to true for verbose DEBUG logging.  Takes effect on reload (./reload.sh)
+  # without a container rebuild.  Revert to false when done investigating.
+  debug: false
+
+  # Token prepended to the first user message when inject_no_think: true.
+  # Qwen3 uses /no_think (no trailing slash).
+  inject_token: "/no_think"
+
+  # Paths on which body inspection runs. Only these paths are ever parsed/modified.
+  # Everything else (embeddings, models list, health, etc.) is byte-for-byte pass-through.
+  inject_paths:
+    - /v1/chat/completions
+    - /v1/completions
+
+models:
+  "RTX5090_CHAT_Qwen3-30B-A3B-GPTQ-Int4-NO-THINK":
+    inject_no_think: true
+
+  # PRIMARY-LOCAL: bare alias — passes through to LiteLLM as-is, no transforms
+  "PRIMARY-LOCAL": {}
+
+  # PRIMARY-LOCAL-NO-THINK: injects /no_think and rewrites the model name to
+  # PRIMARY-LOCAL before forwarding, so LiteLLM sees a valid model identifier
+  "PRIMARY-LOCAL-NO-THINK":
+    inject_no_think: true
+    model_rename: "PRIMARY-LOCAL"
+
+  # MiniMax-M2.5: no config-driven transforms needed here — the ghost
+  # tool-call filter activates automatically for any model whose name
+  # matches "minimax*" (case-insensitive).  Listed for documentation only.
+  # "MiniMax-M2.5": {}
+
+  # Add more models below as needed:
+  # "another-model-name":
+  #   inject_no_think: true
+  #   inject_token: "/custom_token"  # per-model token override
+  #   model_rename: "actual-litellm-model-name"  # rewrite model field before forwarding

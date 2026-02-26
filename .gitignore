@@ -1,0 +1,13 @@
+# Project-specific
+MiniMaxRequirement.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+*.log
