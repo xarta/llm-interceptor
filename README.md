@@ -1,5 +1,12 @@
 # Model call interceptor
 
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![LiteLLM](https://img.shields.io/badge/LiteLLM-proxy-6B4FBB)
+![MiniMax](https://img.shields.io/badge/MiniMax-ghost--filter-FF6B6B)
+![Qwen3](https://img.shields.io/badge/Qwen3-/no__think-4CAF50)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
+
 I use Dockerised LiteLLM running alongside Caddy in a Proxmox LXC to manage most of the Cloud LLM and my local vLLM server LLM endpoints for a number of reasons including not having to share so many secrets with my 'claw agents for example, and so I can rename models so that I don't to rename them in several services if I change my local vLLM models.
 
 Caddy is for some ssl termination / port-num => hostname etc. and layer 7 filtering e.g. to my vLLM specific endpoints.  I use internal PKI and vlans and all that.
